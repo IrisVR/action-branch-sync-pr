@@ -1,0 +1,26 @@
+[
+  {
+    "entity": "project-editors-1041080830683",
+    "projectTeam": {
+      "projectNumber": "1041080830683",
+      "team": "editors"
+    },
+    "role": "OWNER"
+  },
+  {
+    "entity": "project-owners-1041080830683",
+    "projectTeam": {
+      "projectNumber": "1041080830683",
+      "team": "owners"
+    },
+    "role": "OWNER"
+  },
+  {
+    "entity": "project-viewers-1041080830683",
+    "projectTeam": {
+      "projectNumber": "1041080830683",
+      "team": "viewers"
+    },
+    "role": "READER"
+  }
+]
