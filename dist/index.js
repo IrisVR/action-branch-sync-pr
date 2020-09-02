@@ -9316,7 +9316,7 @@ async function run() {
     const repository = github.context.payload.repository;
     const sourceBranch = source.substring(11);
     try {
-        console.log(`Making a pull request for ${target} from ${source}.`);
+        console.log(`Making a pull request for ${target} from ${sourceBranch}.`);
         const octokit = github.getOctokit(githubToken);
         //part of test
         const { data: currentPulls } = await octokit.pulls.list({
@@ -9343,7 +9343,7 @@ async function run() {
             console.log(`Pull request (${pullRequest.number}) successful! You can view it here: ${pullRequest.html_url}.`);
             core.setOutput('PULL_REQUEST_URL', pullRequest.html_url.toString());
             core.setOutput('PULL_REQUEST_NUMBER', pullRequest.number.toString());
-            await slackMessage(repository.name, source, target, pullRequest.html_url.toString(), 'success');
+            await slackMessage(repository.name, sourceBranch, target, pullRequest.html_url.toString(), 'success');
         }
         else {
             console.log(`There is already a pull request (${currentPull.number}) to ${target} from ${newBranch}.`, `You can view it here: ${currentPull.html_url}`);
