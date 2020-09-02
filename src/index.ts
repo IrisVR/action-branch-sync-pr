@@ -76,6 +76,7 @@ async function run() {
   const githubToken = core.getInput('github_token', { required: true });
 
   const repository = github.context.payload.repository!;
+  const sourceBranch = source.substring(11);
 
   try {
     console.log(`Making a pull request for ${target} from ${source}.`);
@@ -90,7 +91,7 @@ async function run() {
 
     //create new branch from source branch and PR between new branch and target branch
     const context = github.context;
-    const newBranch = `${target}-sync-${source}-${context.sha.slice(-6)}`;
+    const newBranch = `${target}-sync-${sourceBranch}-${context.sha.slice(-6)}`;
     await createBranch(octokit, context, newBranch);
 
     const currentPull = currentPulls.find((pull) => {
@@ -103,8 +104,8 @@ async function run() {
         repo: repository.name,
         head: newBranch,
         base: target,
-        title: `sync: ${target}  with ${source}`,
-        body: `sync-branches: syncing ${target} with ${source}`,
+        title: `sync: ${target} with ${sourceBranch}`,
+        body: `sync-branches: syncing ${target} with ${sourceBranch}`,
         draft: false,
       });
 
@@ -120,10 +121,10 @@ async function run() {
       );
       core.setOutput('PULL_REQUEST_URL', currentPull.url.toString());
       core.setOutput('PULL_REQUEST_NUMBER', currentPull.number.toString());
-      await slackMessage(repository.name, source, target, currentPull.html_url.toString(), 'success');
+      await slackMessage(repository.name, sourceBranch, target, currentPull.html_url.toString(), 'success');
     }
   } catch (error) {
-    await slackMessage(repository.name, source, target, '', 'failure');
+    await slackMessage(repository.name, sourceBranch, target, '', 'failure');
     core.setFailed(error.message);
   }
 }
