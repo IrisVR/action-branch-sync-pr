@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.2.5",
-    "@actions/github": "^4.0.0",
+    "@actions/github": "^6.0.0",
     "@slack/webhook": "^5.0.3"
   }
 }
